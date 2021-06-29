@@ -354,15 +354,12 @@ COPY adoptopenjdk.repo /etc/yum.repos.d/adoptopenjdk.repo
 RUN yum install -y adoptopenjdk-8-hotspot
 RUN yum install -y adoptopenjdk-11-hotspot
 
-RUN yum clean all \
-	&& rm -rf /var/cache/yum \
-	&& rm -rf /var/log/* \
-	&& rm -rf /tmp/* \
-	;
-
+RUN yum clean all
 RUN yum makecache
 
 # Disable
+RUN systemctl disable avahi-daemon.service
+RUN systemctl disable kdump.service
 RUN systemctl disable NetworkManager.service
 RUN systemctl disable network.service
 RUN systemctl disable firewalld.service
@@ -387,6 +384,9 @@ COPY package/flex.sh   /home/package/flex/flex.sh
 COPY package/bison.sh  /home/package/bison/bison.sh
 COPY package/astyle.sh /home/package/astyle/astyle.sh
 
+RUN useradd cubrid
+
 RUN echo "root:password" | chpasswd
+RUN echo "cubrid:password" | chpasswd
 
 ENTRYPOINT ["/usr/sbin/init"]
