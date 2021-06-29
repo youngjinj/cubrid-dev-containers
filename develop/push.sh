@@ -1,7 +1,11 @@
 #!/bin/bash
 
-DEV_DOCKER_HUB="dev-docker-hub:5000"
-TAG_NAME="develop:20210624"
+DOCKER_HUB_PROJECT="192.168.2.253:5000/rnd-dev"
+TAG_NAME="develop:2021-06-29"
+LATEST_TAG_NAME="develop:latest"
 
-docker tag ${TAG_NAME} ${DEV_DOCKER_HUB}/${TAG_NAME}
-docker push ${DEV_DOCKER_HUB}/${TAG_NAME}
+docker tag ${TAG_NAME} ${DOCKER_HUB_PROJECT}/${TAG_NAME}
+docker push ${DOCKER_HUB_PROJECT}/${TAG_NAME}
+
+docker tag ${TAG_NAME} ${DOCKER_HUB_PROJECT}/${LATEST_TAG_NAME}
+docker push ${DOCKER_HUB_PROJECT}/${LATEST_TAG_NAME}

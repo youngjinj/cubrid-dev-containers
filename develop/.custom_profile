@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if [ `whoami` == "root" ] && [ `localectl list-locales | grep ^ko_KR.utf8$ | wc -l` == 0 ]; then
-	localedef -f UTF-8 -i ko_KR ko_KR.utf8
-fi
-
 localectl set-locale LANG=ko_KR.utf8
 localectl set-keymap kr
 localectl set-x11-keymap kr
