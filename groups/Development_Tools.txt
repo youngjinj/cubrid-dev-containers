@@ -1,0 +1,105 @@
+# yum group info "Development Tools"
+
+Loaded plugins: aliases, changelog, fastestmirror, kabi, langpacks, tmprepo, verify, versionlock
+Loading support for Red Hat kernel ABI
+Loading mirror speeds from cached hostfile
+ * base: mirror.kakao.com
+ * centos-sclo-rh: mirror.kakao.com
+ * centos-sclo-sclo: mirror.kakao.com
+ * elrepo: mirror-hk.koddos.net
+ * epel: ftp.iij.ad.jp
+ * extras: mirror.kakao.com
+ * remi-safe: ftp.riken.jp
+ * updates: mirror.kakao.com
+
+Group: 개발용 툴
+ Group-Id: development
+ Description: 기본 개발 환경.
+ Mandatory Packages:
+    autoconf
+    automake
+    binutils
+    bison
+    flex
+    gcc
+    gcc-c++
+    gettext
+    libtool
+    make
+    patch
+    pkgconfig
+    redhat-rpm-config
+    rpm-build
+    rpm-sign
+ Default Packages:
+    byacc
+    cscope
+    ctags
+    diffstat
+    doxygen
+    elfutils
+    gcc-gfortran
+    git
+    indent
+    intltool
+    patchutils
+    rcs
+    subversion
+    swig
+    systemtap
+ Optional Packages:
+   ElectricFence
+   ant
+   babel
+   bzr
+   ccache
+   chrpath
+   clips
+   clips-devel
+   clips-doc
+   clips-emacs
+   clips-xclips
+   clipsmm-devel
+   clipsmm-doc
+   cmake
+   cmucl
+   colordiff
+   compat-gcc-44
+   compat-gcc-44-c++
+   cvs
+   cvsps
+   darcs
+   dejagnu
+   email2trac
+   expect
+   ftnchek
+   gcc-gnat
+   gcc-objc
+   gcc-objc++
+   ghc
+   git
+   haskell-platform
+   imake
+   javapackages-tools
+   ksc
+   lua
+   mercurial
+   mock
+   mod_dav_svn
+   nasm
+   nqc
+   nqc-doc
+   ocaml
+   perltidy
+   qgit
+   rpmdevtools
+   rpmlint
+   sbcl
+   scorep
+   systemtap-sdt-devel
+   systemtap-server
+   trac
+   trac-git-plugin
+   trac-mercurial-plugin
+   trac-webadmin
+   translate-toolkit

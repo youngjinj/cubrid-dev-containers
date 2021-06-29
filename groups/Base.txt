@@ -1,0 +1,188 @@
+# yum group info "Base"
+
+Loaded plugins: aliases, changelog, fastestmirror, kabi, langpacks, tmprepo, verify, versionlock
+Loading support for Red Hat kernel ABI
+Loading mirror speeds from cached hostfile
+ * base: mirror.kakao.com
+ * centos-sclo-rh: mirror.kakao.com
+ * centos-sclo-sclo: mirror.kakao.com
+ * elrepo: mirror-hk.koddos.net
+ * epel: ftp.iij.ad.jp
+ * extras: mirror.kakao.com
+ * remi-safe: ftp.riken.jp
+ * updates: mirror.kakao.com
+
+Group: 기본
+ Group-Id: base
+ Description: CentOS Linux 기본 설치.
+ Mandatory Packages:
+    acl
+    at
+    attr
+    bc
+    bind-utils
+    centos-indexhtml
+    cpio
+    crda
+    crontabs
+    cyrus-sasl-plain
+    dbus
+    ed
+    file
+    logrotate
+    lsof
+    man-db
+    net-tools
+    ntsysv
+    pciutils
+    psacct
+    quota
+    setserial
+    traceroute
+    usb_modeswitch
+ Default Packages:
+    abrt-addon-ccpp
+    abrt-addon-python
+    abrt-cli
+    abrt-console-notification
+    bash-completion
+    blktrace
+    bpftool
+    bridge-utils
+    bzip2
+    chrony
+    cryptsetup
+    dmraid
+    dosfstools
+    ethtool
+    fprintd-pam
+    gnupg2
+    hunspell
+    hunspell-en
+    kmod-kvdo
+    kpatch
+    ledmon
+    libaio
+    libreport-plugin-mailx
+    libstoragemgmt
+    lvm2
+    man-pages
+    man-pages-overrides
+    mdadm
+    mlocate
+    mtr
+    nano
+    ntpdate
+    pinfo
+    plymouth
+    pm-utils
+    rdate
+    rfkill
+    rng-tools
+    rsync
+    scl-utils
+    setuptool
+    smartmontools
+    sos
+    sssd-client
+    strace
+    sysstat
+    systemtap-runtime
+    tcpdump
+    tcsh
+    teamd
+    time
+    unzip
+    usbutils
+    vdo
+    vim-enhanced
+    virt-what
+    wget
+    which
+    words
+    xfsdump
+    xz
+    yum-langpacks
+    yum-utils
+    zip
+ Optional Packages:
+   PyPAM
+   acpid
+   audispd-plugins
+   augeas
+   bash-completion
+   bcc
+   brltty
+   ceph-common
+   cryptsetup-reencrypt
+   daxio
+   denyhosts
+   device-mapper-persistent-data
+   dos2unix
+   dumpet
+   environment-modules
+   fwupd
+   fwupdate
+   genisoimage
+   ghex
+   gpm
+   i2c-tools
+   ima-evm-utils
+   insights-client
+   kabi-yum-plugins
+   libatomic
+   libcgroup
+   libcgroup-tools
+   libitm
+   libstoragemgmt-arcconf-plugin
+   libstoragemgmt-hpsa-plugin
+   libstoragemgmt-local-plugin
+   libstoragemgmt-megaraid-plugin
+   libstoragemgmt-nfs-plugin
+   libstoragemgmt-nfs-plugin-clibs
+   libstoragemgmt-nstor-plugin
+   libstoragemgmt-smis-plugin
+   libstoragemgmt-targetd-plugin
+   libstoragemgmt-udev
+   linuxptp
+   logwatch
+   mkbootdisk
+   mtools
+   ncurses-term
+   ntp
+   nvme-cli
+   nvmetcli
+   oddjob
+   p7zip
+   pax
+   perl-gettext
+   prelink
+   python-subprocess32
+   python-volume_key
+   redhat-lsb-core
+   redhat-upgrade-dracut
+   redhat-upgrade-tool
+   rsyslog-gnutls
+   rsyslog-gssapi
+   rsyslog-kafka
+   rsyslog-relp
+   sgpio
+   sos-collector
+   sox
+   squashfs-tools
+   star
+   tmpwatch
+   udftools
+   usbguard
+   uuidd
+   volume_key
+   wodim
+   x86info
+   yum-plugin-aliases
+   yum-plugin-changelog
+   yum-plugin-tmprepo
+   yum-plugin-verify
+   yum-plugin-versionlock
+   zsh
+ Conditional Packages:
+    rubygem-abrt
