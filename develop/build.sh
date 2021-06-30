@@ -1,5 +1,5 @@
 #!/bin/bash
 
-TAG_NAME="develop:2021-06-29"
+TAG_NAME=`date "+%Y-%m-%d"`
 
-docker build --rm -t ${TAG_NAME} .
+docker build --rm -t develop:${TAG_NAME} .

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ `whoami` == "root" ] && [ -n "${CREATE_USER_NAME}" ] && [ `cat /etc/passwd | grep "^${CREATE_USER_NAME}:" | wc -l` ];  then
+	useradd ${CREATE_USER_NAME}
+fi
+
 localectl set-locale LANG=ko_KR.utf8
 localectl set-keymap kr
 localectl set-x11-keymap kr
@@ -25,7 +29,7 @@ JAVA_HOME=${JDK_HOME}
 DEFAULT_CLASSPATH=".:tools.jar"
 
 # Length of string is non-zero.
-if [ -n ${CLASSPATH} ]; then
+if [ -n "${CLASSPATH}" ]; then
 	if [ `echo ${CLASSPATH} | grep ${DEFAULT_CLASSPATH} | wc -l` == 0 ]; then
 		CLASSPATH=${DEFAULT_CLASSPATH}:${CLASSPATH}
 	fi
@@ -34,7 +38,7 @@ else
 	CLASSPATH=${DEFAULT_CLASSPATH}
 fi
 
-if [ -d ${CUBRID}/jdbc ]; then
+if [ -d "${CUBRID}/jdbc" ]; then
 	for CUBRID_JDBC_DRIVER in `ls ${CUBRID}/jdbc/*.jar`; do
 		if [ `echo ${CLASSPATH} | grep ${CUBRID_JDBC_DRIVER} | wc -l` == 0 ]; then
 			CLASSPATH=${CLASSPATH}:${CUBRID_JDBC_DRIVER}
@@ -42,7 +46,7 @@ if [ -d ${CUBRID}/jdbc ]; then
 	done
 fi
 
-if [ -d ${CUBRID}/java ]; then
+if [ -d "${CUBRID}/java" ]; then
 	for CUBRID_JDBC_DRIVER in `ls ${CUBRID}/java/*.jar`; do
 		if [ `echo ${CLASSPATH} | grep ${CUBRID_JDBC_DRIVER} | wc -l` == 0 ]; then
 			CLASSPATH=${CLASSPATH}:${CUBRID_JDBC_DRIVER}
@@ -50,7 +54,7 @@ if [ -d ${CUBRID}/java ]; then
 	done
 fi
 
-if [ -d ${CUBRID}/java/lib ]; then
+if [ -d "${CUBRID}/java/lib" ]; then
 	for CUBRID_JDBC_DRIVER in `ls ${CUBRID}/java/lib/*.jar`; do
 		if [ `echo ${CLASSPATH} | grep ${CUBRID_JDBC_DRIVER} | wc -l` == 0 ]; then
 			CLASSPATH=${CLASSPATH}:${CUBRID_JDBC_DRIVER}
@@ -67,7 +71,7 @@ PATH=${JAVA_HOME}/bin:${PATH}
 TEMP_LD_LIBRARY_PATH=${JAVA_HOME}/lib:${JAVA_HOME}/lib/server
 
 # Length of string is non-zero.
-if [ -n ${LD_LIBRARY_PATH} ]; then
+if [ -n "${LD_LIBRARY_PATH}" ]; then
 	if [ `echo ${LD_LIBRARY_PATH} | grep ${TEMP_LD_LIBRARY_PATH} | wc -l` == 0 ]; then
 		LD_LIBRARY_PATH=${TEMP_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}
 	fi

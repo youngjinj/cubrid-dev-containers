@@ -384,9 +384,8 @@ COPY package/flex.sh   /home/package/flex/flex.sh
 COPY package/bison.sh  /home/package/bison/bison.sh
 COPY package/astyle.sh /home/package/astyle/astyle.sh
 
-RUN useradd cubrid
-
 RUN echo "root:password" | chpasswd
-RUN echo "cubrid:password" | chpasswd
+
+ENV CREATE_USER_NAME cubrid
 
 ENTRYPOINT ["/usr/sbin/init"]
