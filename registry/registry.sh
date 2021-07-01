@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Not used.
+# Not in use.
 #
 exit
 
