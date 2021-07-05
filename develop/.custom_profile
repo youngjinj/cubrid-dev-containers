@@ -8,6 +8,10 @@ localectl set-locale LANG=ko_KR.utf8
 localectl set-keymap kr
 localectl set-x11-keymap kr
 
+export LANG=ko_KR.utf8
+export LANGUAGE ko_KR
+export LC_ALL=ko_KR.utf8
+
 timedatectl set-timezone Asia/Seoul
 timedatectl set-local-rtc no
 timedatectl set-ntp yes
