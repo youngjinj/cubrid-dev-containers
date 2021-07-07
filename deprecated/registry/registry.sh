@@ -1,8 +1,6 @@
 #!/bin/bash
 
-#
-# Not in use.
-#
+# deprecated
 exit
 
 docker pull registry:2

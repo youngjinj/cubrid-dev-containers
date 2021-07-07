@@ -1,0 +1,97 @@
+#!/bin/bash
+
+if [ `whoami` == "root" ] && [ -n "${CREATE_USER_NAME}" ] && [ `cat /etc/passwd | grep "^${CREATE_USER_NAME}:" | wc -l` ];  then
+	useradd ${CREATE_USER_NAME}
+	echo "${CREATE_USER_NAME}:password" | chpasswd
+
+	usermod -aG wheel ${CREATE_USER_NAME}
+fi
+
+if [ `whoami` == "root" ]; then
+	localectl set-locale LANG=ko_KR.utf8
+	localectl set-keymap kr
+	localectl set-x11-keymap kr
+
+	timedatectl set-timezone Asia/Seoul
+	timedatectl set-local-rtc no
+	timedatectl set-ntp yes
+fi
+
+export LANG=ko_KR.utf8
+export LANGUAGE ko_KR
+export LC_ALL=ko_KR.utf8
+
+source scl_source enable devtoolset-8
+
+export MAKEFLAGS="-j 40"
+
+# java
+#JDK_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.292.b10-1.el7_9.x86_64
+#JDK_HOME=/usr/lib/jvm/adoptopenjdk-8-hotspot
+
+# java-11
+#JDK_HOME=/usr/lib/jvm/java-11-openjdk-11.0.11.0.9-1.el7_9.x86_64
+JDK_HOME=/usr/lib/jvm/adoptopenjdk-11-hotspot
+
+JAVA_HOME=${JDK_HOME}
+
+DEFAULT_CLASSPATH=".:tools.jar"
+
+# Length of string is non-zero.
+if [ -n "${CLASSPATH}" ]; then
+	if [ `echo ${CLASSPATH} | grep ${DEFAULT_CLASSPATH} | wc -l` == 0 ]; then
+		CLASSPATH=${DEFAULT_CLASSPATH}:${CLASSPATH}
+	fi
+# Length of string is zero.
+else
+	CLASSPATH=${DEFAULT_CLASSPATH}
+fi
+
+if [ -d "${CUBRID}/jdbc" ]; then
+	for CUBRID_JDBC_DRIVER in `ls ${CUBRID}/jdbc/*.jar`; do
+		if [ `echo ${CLASSPATH} | grep ${CUBRID_JDBC_DRIVER} | wc -l` == 0 ]; then
+			CLASSPATH=${CLASSPATH}:${CUBRID_JDBC_DRIVER}
+		fi
+	done
+fi
+
+if [ -d "${CUBRID}/java" ]; then
+	for CUBRID_JDBC_DRIVER in `ls ${CUBRID}/java/*.jar`; do
+		if [ `echo ${CLASSPATH} | grep ${CUBRID_JDBC_DRIVER} | wc -l` == 0 ]; then
+			CLASSPATH=${CLASSPATH}:${CUBRID_JDBC_DRIVER}
+		fi
+	done
+fi
+
+if [ -d "${CUBRID}/java/lib" ]; then
+	for CUBRID_JDBC_DRIVER in `ls ${CUBRID}/java/lib/*.jar`; do
+		if [ `echo ${CLASSPATH} | grep ${CUBRID_JDBC_DRIVER} | wc -l` == 0 ]; then
+			CLASSPATH=${CLASSPATH}:${CUBRID_JDBC_DRIVER}
+		fi
+	done
+fi
+
+PATH=${JAVA_HOME}/bin:${PATH}
+
+# java
+#TEMP_LD_LIBRARY_PATH=${JAVA_HOME}/jre/lib/amd64:${JAVA_HOME}/jre/lib/amd64/server
+
+# java-11
+TEMP_LD_LIBRARY_PATH=${JAVA_HOME}/lib:${JAVA_HOME}/lib/server
+
+# Length of string is non-zero.
+if [ -n "${LD_LIBRARY_PATH}" ]; then
+	if [ `echo ${LD_LIBRARY_PATH} | grep ${TEMP_LD_LIBRARY_PATH} | wc -l` == 0 ]; then
+		LD_LIBRARY_PATH=${TEMP_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}
+	fi
+# Length of string is zero.
+else
+	LD_LIBRARY_PATH=${TEMP_LD_LIBRARY_PATH}
+fi
+
+export JDK_HOME
+export JAVA_HOME
+export CLASSPATH
+
+export PATH
+export LD_LIBRARY_PATH

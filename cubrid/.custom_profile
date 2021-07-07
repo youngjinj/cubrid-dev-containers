@@ -2,19 +2,24 @@
 
 if [ `whoami` == "root" ] && [ -n "${CREATE_USER_NAME}" ] && [ `cat /etc/passwd | grep "^${CREATE_USER_NAME}:" | wc -l` ];  then
 	useradd ${CREATE_USER_NAME}
+	echo "${CREATE_USER_NAME}:password" | chpasswd
+
+	usermod -aG wheel ${CREATE_USER_NAME}
 fi
 
-localectl set-locale LANG=ko_KR.utf8
-localectl set-keymap kr
-localectl set-x11-keymap kr
+if [ `whoami` == "root" ]; then
+	localectl set-locale LANG=ko_KR.utf8
+	localectl set-keymap kr
+	localectl set-x11-keymap kr
+
+	timedatectl set-timezone Asia/Seoul
+	timedatectl set-local-rtc no
+	timedatectl set-ntp yes
+fi
 
 export LANG=ko_KR.utf8
 export LANGUAGE ko_KR
 export LC_ALL=ko_KR.utf8
-
-timedatectl set-timezone Asia/Seoul
-timedatectl set-local-rtc no
-timedatectl set-ntp yes
 
 source scl_source enable devtoolset-8
 
