@@ -1,21 +1,26 @@
 #!/bin/bash
 
-if [ `whoami` == "root" ] && [ -n "${CREATE_USER_NAME}" ] && [ `cat /etc/passwd | grep "^${CREATE_USER_NAME}:" | wc -l` ];  then
-	useradd ${CREATE_USER_NAME}
-	echo "${CREATE_USER_NAME}:password" | chpasswd
+while true; do
+	if [ `cat /etc/passwd | grep "^cubrid:" | wc -l` != 0 ]; then
+		break;
+	fi
 
-	usermod -aG wheel ${CREATE_USER_NAME}
-fi
+	if [ `whoami` != "root" ]; then
+		break;
+	fi
 
-if [ `whoami` == "root" ]; then
-	localectl set-locale LANG=ko_KR.utf8
-	localectl set-keymap kr
-	localectl set-x11-keymap kr
+	IP_D_CLASS=`hostname -I | awk -F '.' '{printf("%3s", $NF)}'`
+	sed --in-place "s/UID_MIN                  1000/UID_MIN              ${IP_D_CLASS//[[:space:]]/}01000/" /etc/login.defs
+	sed --in-place "s/UID_MAX                 60000/UID_MAX              ${IP_D_CLASS//[[:space:]]/}60000/" /etc/login.defs
+	sed --in-place "s/GID_MIN                  1000/GID_MIN              ${IP_D_CLASS//[[:space:]]/}01000/" /etc/login.defs
+	sed --in-place "s/GID_MAX                 60000/GID_MAX              ${IP_D_CLASS//[[:space:]]/}60000/" /etc/login.defs
 
-	timedatectl set-timezone Asia/Seoul
-	timedatectl set-local-rtc no
-	timedatectl set-ntp yes
-fi
+	useradd cubrid
+	echo "cubrid:password" | chpasswd
+        usermod -aG wheel cubrid
+
+	break;
+done
 
 export LANG=ko_KR.utf8
 export LANGUAGE ko_KR
@@ -26,12 +31,12 @@ source scl_source enable devtoolset-8
 export MAKEFLAGS="-j 40"
 
 # java
-#JDK_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.292.b10-1.el7_9.x86_64
-#JDK_HOME=/usr/lib/jvm/adoptopenjdk-8-hotspot
+JDK_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.292.b10-1.el7_9.x86_64
+# JDK_HOME=/usr/lib/jvm/adoptopenjdk-8-hotspot
 
 # java-11
-#JDK_HOME=/usr/lib/jvm/java-11-openjdk-11.0.11.0.9-1.el7_9.x86_64
-JDK_HOME=/usr/lib/jvm/adoptopenjdk-11-hotspot
+# JDK_HOME=/usr/lib/jvm/java-11-openjdk-11.0.11.0.9-1.el7_9.x86_64
+# JDK_HOME=/usr/lib/jvm/adoptopenjdk-11-hotspot
 
 JAVA_HOME=${JDK_HOME}
 
@@ -74,10 +79,10 @@ fi
 PATH=${JAVA_HOME}/bin:${PATH}
 
 # java
-#TEMP_LD_LIBRARY_PATH=${JAVA_HOME}/jre/lib/amd64:${JAVA_HOME}/jre/lib/amd64/server
+TEMP_LD_LIBRARY_PATH=${JAVA_HOME}/jre/lib/amd64:${JAVA_HOME}/jre/lib/amd64/server
 
 # java-11
-TEMP_LD_LIBRARY_PATH=${JAVA_HOME}/lib:${JAVA_HOME}/lib/server
+# TEMP_LD_LIBRARY_PATH=${JAVA_HOME}/lib:${JAVA_HOME}/lib/server
 
 # Length of string is non-zero.
 if [ -n "${LD_LIBRARY_PATH}" ]; then

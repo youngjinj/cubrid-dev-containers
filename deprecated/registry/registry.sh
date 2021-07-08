@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# deprecated
-exit
-
 docker pull registry:2
 docker pull hyper/docker-registry-web:latest
 

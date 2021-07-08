@@ -10,6 +10,8 @@ REF_NAME=`cd ${CANONICAL_PATH} && git symbolic-ref -q --short HEAD`
 IMAGE_NAME="baseimage"
 IMAGE_TAG=${VERSION}
 
+docker pull 192.168.2.253:5000/development/centos-systemd:7
+
 docker buildx build \
 	--build-arg CREATED=${CREATED} \
 	--build-arg VERSION=${VERSION} \

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# deprecated
+exit
+
 REBUILD=$1
 
 if [ $# != 0 ] && [ -n "${REBUILD}" ]  && [ "${REBUILD^^}" = "REBUILD" ]; then

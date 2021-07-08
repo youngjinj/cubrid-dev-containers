@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# dozzle
-exit
-
 docker pull amir20/dozzle:latest
 
 docker run --detach \

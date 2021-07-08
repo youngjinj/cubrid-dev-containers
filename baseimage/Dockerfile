@@ -1,4 +1,4 @@
-FROM 192.168.2.253:5000/rnd-dev/centos-systemd:7
+FROM 192.168.2.253:5000/development/centos-systemd:7
 
 RUN    sed -i "s/^enabled=1/enabled=0/" /etc/yum/pluginconf.d/fastestmirror.conf \
      ; sed -i "s/^override_install_langs=en_US.utf8/# override_install_langs=en_US.utf8/" /etc/yum.conf \
@@ -319,6 +319,8 @@ RUN    rpm -e --nodeps git perl-Git \
 RUN    yum clean all \
     && yum makecache
 
+RUN yum remove -y scorep-\*
+
 RUN    systemctl disable avahi-daemon.service \
                          kdump.service \
                          NetworkManager.service \
@@ -328,19 +330,14 @@ RUN    systemctl disable avahi-daemon.service \
                          sshd.service
 
 # Artistic Style 3.1
-RUN    mkdir -p /usr/local/src/astyle/astyle-3.1 \
-    && curl -L https://jaist.dl.sourceforge.net/project/astyle/astyle/astyle%203.1/astyle_3.1_linux.tar.gz -o /usr/local/src/astyle/astyle_3.1_linux.tar.gz \
-    && tar -zxvf /usr/local/src/astyle/astyle_3.1_linux.tar.gz -C /usr/local/src/astyle/astyle-3.1 --strip-components=1 \
-    && cd /usr/local/src/astyle/astyle-3.1 && cmake3 . && make && make install
+#   - make uninstall: `xargs rm < /usr/local/src/astyle_3.1_linux/install_manifest.txt`
+RUN    mkdir -p /usr/local/src/astyle_3.1_linux \
+    && curl -L https://jaist.dl.sourceforge.net/project/astyle/astyle/astyle%203.1/astyle_3.1_linux.tar.gz -o /usr/local/src/astyle_3.1_linux.tar.gz \
+    && tar -zxvf /usr/local/src/astyle_3.1_linux.tar.gz -C /usr/local/src/astyle_3.1_linux --strip-components=1 \
+    && cd /usr/local/src/astyle_3.1_linux && cmake3 .&& make && make install
 
 RUN    rm -rf /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
-
-RUN    set -x \
-    && echo $' \
-\nexport LANG="ko_KR.utf8" \
-\nexport LC_ALL="ko_KR.utf8" \
-\nexport LANGUAGE="ko_KR"' >> /etc/profile
 
 ###############################################################################################################################################################
 

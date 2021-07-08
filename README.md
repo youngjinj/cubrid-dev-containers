@@ -1,1 +1,1 @@
-# cubrid-dev-containers
+# dev-server

@@ -9,9 +9,9 @@ fi
 CONTAINER_NAME=$1
 IP_D_CLASS=$2
 
-DOCKER_HUB_PROJECT="192.168.2.253:5000/rnd-dev"
-TAG_NAME="develop:latest"
-VOLUME_NAME="develop_${CONTAINER_NAME}_${IP_D_CLASS}_data"
+DOCKER_HUB_PROJECT="192.168.2.253:5000/development"
+TAG_NAME="cubrid:latest"
+VOLUME_NAME="development-cubrid_${CONTAINER_NAME}_${IP_D_CLASS}_data"
 
 docker pull ${DOCKER_HUB_PROJECT}/${TAG_NAME}
 
@@ -28,3 +28,5 @@ docker run --detach \
 	--privileged \
 	--restart always \
 	${DOCKER_HUB_PROJECT}/${TAG_NAME}
+
+docker exec --interactive --tty ${CONTAINER_NAME} /bin/bash /root/.custom_profile
