@@ -6,7 +6,7 @@ RUN    sed -i "s/^enabled=1/enabled=0/" /etc/yum/pluginconf.d/fastestmirror.conf
 
 RUN    yum install -y epel-release \
      ; yum install -y https://rpms.remirepo.net/enterprise/remi-release-7.rpm \
-     ; yum install -y https://repo.ius.io/ius-release-el7.rpm \
+     ; yum install -y https://repo.ius.io/ius-release-el7.rpm
 
 # Reference:
 # CentOS Docker build scripts
@@ -292,7 +292,7 @@ RUN    yum install -y centos-release-scl \
                       elfutils-libelf-devel \
                       ncurses-devel \
                       openssl \
-                      openssl-devel \
+                      openssl-devel
 
 RUN    yum install -y java-1.8.0-openjdk \
                       java-1.8.0-openjdk-devel \
