@@ -72,6 +72,14 @@ else
 	LD_LIBRARY_PATH=${TEMP_LD_LIBRARY_PATH}
 fi
 
+#cppcheck
+CPPCHECK_PATH="/usr/local/src/cppcheck/cppcheck-2.4.1"
+PATH=${CPPCHECK_PATH}:${PATH}
+
+#ruby 2.6.5
+RUBY_PATH=/usr/local/rvm/rubies/ruby-2.6.5/
+PATH=${RUBY_PATH}/bin:${PATH}
+
 export JDK_HOME
 export JAVA_HOME
 export CLASSPATH

@@ -410,6 +410,45 @@ RUN    mkdir -p /usr/local/src/astyle_3.1_linux \
     && tar -zxvf /usr/local/src/astyle_3.1_linux.tar.gz -C /usr/local/src/astyle_3.1_linux --strip-components=1 \
     && cd /usr/local/src/astyle_3.1_linux && cmake3 . && make && make install
 
+# CPPCHECK 2.4.1
+RUN mkdir -p /usr/local/src/cppcheck/cppcheck-2.4.1 \
+        && curl -L https://github.com/danmar/cppcheck/archive/2.4.1.tar.gz -o /usr/local/src/cppcheck/2.4.1.tar.gz \
+        && tar -zxvf /usr/local/src/cppcheck/2.4.1.tar.gz -C /usr/local/src/cppcheck/cppcheck-2.4.1 --strip-components=1 \
+        && cd /usr/local/src/cppcheck/cppcheck-2.4.1 \
+        && make -j4 SRCDIR=build CFGDIR=cfg CXXFLAGS="-O2 -DNDEBUG -Wall -Wno-sign-compare -Wno-unused-function" \
+        ;
+
+### For Dev1-team
+#mysql, zsh, telnet, samba
+RUN yum install -y http://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+
+RUN yum install -y \
+  zsh \
+  telnet \
+  samba \
+  mysql-community-server \
+  ;
+
+COPY smb.conf /etc/samba/smb.conf
+
+##USE RVM
+RUN curl -sSL https://rvm.io/mpapis.asc | gpg2 --import - \
+       && curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import - \
+       && curl -sSL https://get.rvm.io | bash -s stable \
+       && /usr/local/rvm/bin/rvm reload \
+       && /usr/local/rvm/bin/rvm requirements run \
+       && /usr/local/rvm/bin/rvm install 2.6.5 \
+       ;
+
+# PHP 7.4
+RUN yum --enablerepo=remi-php74 install -y php php-common php-devel php-bcmath php-gd php-pdo php-pear php-mysqlnd php-mbstring php-xml php-tidy php-soap
+COPY package/php.sh /usr/local/scripts/php.sh
+
+# For Manual
+RUN /usr/bin/pip3 install sphinx==1.7.9 && /usr/bin/pip3 install sphinx_rtd_theme
+
+### End For Dev1-team
+
 RUN    rm -rf /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
