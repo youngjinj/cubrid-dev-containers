@@ -369,9 +369,22 @@ RUN yum install -y cgdb \
                    cmake3 \
                    glances \
                    htop \
+                   jq \
                    maven \
                    samba \
-                   telnet
+                   telnet \
+                   zsh
+
+RUN yum install -y dh-autoreconf \
+                   curl-devel \
+                   expat-devel \
+                   gettext-devel \
+                   openssl-devel \
+                   perl-devel \
+                   zlib-devel \
+                   asciidoc \
+                   xmlto \
+                   docbook2X
 
 RUN yum install -y cockpit \
                    cockpit-dashboard
@@ -387,14 +400,15 @@ RUN    systemctl disable avahi-daemon.service \
 RUN    mkdir -p /usr/local/src/git-2.32.0 \
     && curl -L https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.32.0.tar.xz -o /usr/local/src/git-2.32.0.tar.xz \
     && tar -Jxvf /usr/local/src/git-2.32.0.tar.xz -C /usr/local/src/git-2.32.0 --strip-components=1 \
-    && cd /usr/local/src/git-2.32.0 && ./configure .&& make && make install
+    && ln -s /usr/bin/db2x_docbook2texi /usr/bin/docbook2x-texi \
+    && cd /usr/local/src/git-2.32.0 && make configure && ./configure && make all doc info && sudo make install install-doc install-html install-info
 
 # Artistic Style 3.1
 #   - make uninstall: `xargs rm < /usr/local/src/astyle_3.1_linux/install_manifest.txt`
 RUN    mkdir -p /usr/local/src/astyle_3.1_linux \
     && curl -L https://jaist.dl.sourceforge.net/project/astyle/astyle/astyle%203.1/astyle_3.1_linux.tar.gz -o /usr/local/src/astyle_3.1_linux.tar.gz \
     && tar -zxvf /usr/local/src/astyle_3.1_linux.tar.gz -C /usr/local/src/astyle_3.1_linux --strip-components=1 \
-    && cd /usr/local/src/astyle_3.1_linux && cmake3 .&& make && make install
+    && cd /usr/local/src/astyle_3.1_linux && cmake3 . && make && make install
 
 RUN    rm -rf /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
@@ -429,8 +443,9 @@ ARG REF_NAME
 #   - https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.created=$CREATED \
       org.opencontainers.image.authors="youngjinj@cubrid.com" \
-      org.opencontainers.image.url="hhttps://github.com/youngjinj/dev-server.git" \
+      org.opencontainers.image.url="https://github.com/youngjinj/cubrid-dev-containers.git" \
       org.opencontainers.image.version=$VERSION \
       org.opencontainers.image.revision=$REVISION \
       org.opencontainers.image.vendor="CUBRID" \
-      org.opencontainers.image.ref.name=$REF_NAME
+      org.opencontainers.image.ref.name=$REF_NAME \
+      org.opencontainers.image.title="CUBRID Development Base Image"

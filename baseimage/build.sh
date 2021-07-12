@@ -16,14 +16,14 @@ IMAGE_TAG=${VERSION}
 docker pull 192.168.2.253:5000/development/centos-systemd:7
 
 if [ -z ${IS_NO_CACHE} ]; then
-        docker build \
+        docker buildx build \
                 --build-arg CREATED=${CREATED} \
                 --build-arg VERSION=${VERSION} \
                 --build-arg REVISION=${REVISION} \
                 --build-arg REF_NAME=${REF_NAME} \
                 --rm \
                 --tag ${IMAGE_NAME}:${IMAGE_TAG} \
-                . > ${CANONICAL_PATH}/build_${VERSION}.log
+                .
 elif [ ${IS_NO_CACHE} == "Y" ]; then
         docker build \
                 --build-arg CREATED=${CREATED} \

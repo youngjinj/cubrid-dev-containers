@@ -28,7 +28,7 @@ ARG REF_NAME
 #   - https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.created=$CREATED \
       org.opencontainers.image.authors="youngjinj@cubrid.com" \
-      org.opencontainers.image.url="hhttps://github.com/youngjinj/dev-server.git" \
+      org.opencontainers.image.url="https://github.com/youngjinj/cubrid-dev-containers.git" \
       org.opencontainers.image.version=$VERSION \
       org.opencontainers.image.revision=$REVISION \
       org.opencontainers.image.vendor="CUBRID" \
@@ -56,6 +56,10 @@ RUN    sed "/# End of file/d" -i /etc/security/limits.conf \
 
 RUN    sed -i "s/^\(%wheel[[:space:]]ALL=(ALL)[[:space:]]ALL\)/# \1/" /etc/sudoers \
     && sed -i "s/^# \(%wheel[[:space:]]ALL=(ALL)[[:space:]]NOPASSWD: ALL\)/\1/" /etc/sudoers
+
+COPY create_user_cubrid.sh /root/create_user_cubrid.sh
+
+RUN chmod +x /root/create_user_cubrid.sh
 
 COPY .custom_profile /root/.custom_profile
 COPY .custom_profile /etc/skel/.custom_profile

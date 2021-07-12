@@ -18,7 +18,9 @@ VOLUME_NAME="development-cubrid_${CONTAINER_NAME}_${IP_D_CLASS}_data"
 
 docker pull ${DOCKER_HUB_PROJECT}/${TAG_NAME}
 
-docker volume create ${VOLUME_NAME}
+if [ `docker volume ls --format "{{.Name}}" | grep ${VOLUME_NAME} | wc -l` == 0 ]; then
+	docker volume create ${VOLUME_NAME}
+fi
 
 docker run --detach \
 	--name ${CONTAINER_NAME} \
@@ -32,4 +34,6 @@ docker run --detach \
 	--restart always \
 	${DOCKER_HUB_PROJECT}/${TAG_NAME}
 
-docker exec --interactive --tty ${CONTAINER_NAME} /bin/bash /root/.custom_profile
+docker exec --interactive --tty ${CONTAINER_NAME} /bin/bash -x /root/create_user_cubrid.sh
+
+${CANONICAL_PATH}/ip_address_update.sh

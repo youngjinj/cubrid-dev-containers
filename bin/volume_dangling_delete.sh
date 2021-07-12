@@ -2,4 +2,6 @@
 
 docker volume ls -f dangling=true
 
-docker volume rm $(docker volume ls -f dangling=true -q)
+if [ `docker volume ls -f dangling=true -q | wc -l` != 0 ]; then
+	docker volume rm $(docker volume ls -f dangling=true -q)
+fi

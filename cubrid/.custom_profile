@@ -1,27 +1,5 @@
 #!/bin/bash
 
-while true; do
-	if [ `cat /etc/passwd | grep "^cubrid:" | wc -l` != 0 ]; then
-		break;
-	fi
-
-	if [ `whoami` != "root" ]; then
-		break;
-	fi
-
-	IP_D_CLASS=`hostname -I | awk -F '.' '{printf("%3s", $NF)}'`
-	sed --in-place "s/UID_MIN                  1000/UID_MIN              ${IP_D_CLASS//[[:space:]]/}01000/" /etc/login.defs
-	sed --in-place "s/UID_MAX                 60000/UID_MAX              ${IP_D_CLASS//[[:space:]]/}60000/" /etc/login.defs
-	sed --in-place "s/GID_MIN                  1000/GID_MIN              ${IP_D_CLASS//[[:space:]]/}01000/" /etc/login.defs
-	sed --in-place "s/GID_MAX                 60000/GID_MAX              ${IP_D_CLASS//[[:space:]]/}60000/" /etc/login.defs
-
-	useradd cubrid
-	echo "cubrid:password" | chpasswd
-        usermod -aG wheel cubrid
-
-	break;
-done
-
 export LANG=ko_KR.utf8
 export LANGUAGE ko_KR
 export LC_ALL=ko_KR.utf8
