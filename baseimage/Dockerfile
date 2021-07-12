@@ -4,9 +4,20 @@ RUN    sed -i "s/^enabled=1/enabled=0/" /etc/yum/pluginconf.d/fastestmirror.conf
      ; sed -i "s/^override_install_langs=en_US.utf8/# override_install_langs=en_US.utf8/" /etc/yum.conf \
      ; sed -i "s/^tsflags=nodocs/# tsflags=nodocs/" /etc/yum.conf
 
-RUN    yum install -y epel-release \
-     ; yum install -y https://rpms.remirepo.net/enterprise/remi-release-7.rpm \
-     ; yum install -y https://repo.ius.io/ius-release-el7.rpm
+RUN    rm -f /var/lib/rpm/__* \
+     ; rpm --rebuilddb -v -v \
+     ; yum clean all \
+     ; yum makecache \
+
+RUN    yum install -y deltarpm \
+                      yum-utils \
+     ; yum update -y
+
+RUN    yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+                      https://rpms.remirepo.net/enterprise/remi-release-7.rpm \
+                      https://repo.ius.io/ius-release-el7.rpm \
+    && sed -i "s/^#\(baseurl.*\)/\1/" /etc/yum.repos.d/epel.repo \
+    && sed -i "s/^\(metalink.*\)/# \1/" /etc/yum.repos.d/epel.repo
 
 # Reference:
 # CentOS Docker build scripts
@@ -36,256 +47,298 @@ RUN    yum install -y epel-release \
 #   - sendmail
 #   - sssd
 
-RUN    yum update -y \
-     ; yum install -y cockpit cockpit-dashboard
+RUN yum install -y man \
+                   man-pages \
+                   kernel-doc
+
+# KSC (Kernel Source Checker)
+#   - The Linux Kernel Module Source Checker (ksc) is a tool to check for non whitelist symbols in a given kernel module.
+
+# VCS (Version Control System)
+#   - CVCS (Centralized Version Control System): CVS, Subversion, Perforce
+#   - DVCS (Distributed Version Control System): Git, Mecurial, Bazaar(bzr), Darcs, Monotone
+
+# Haskell: ghc, haskell-platform
+#   - https://www.haskell.org/
+#   - https://www.haskell.org/ghc/
+#   - https://www.haskell.org/platform/
+#   - Haskell is a modern, standard, non-strict, purely-functional programming language.
+
+# CMUCL
+#   - https://www.cons.org/cmucl/
+#   - CMUCL is a free implementation of the Common Lisp programming language which runs on most major Unix platforms.
+
+# SBCL (Steel Bank Common Lisp)
+#   - http://www.sbcl.org/
+#   - Steel Bank Common Lisp (SBCL) is a high performance Common Lisp compiler.
+
+# Lua
+#   - https://www.lua.org/
+#   - Lua is a powerful, efficient, lightweight, embeddable scripting language.
+
+# NQC (Not Quite C)
+#   - http://bricxcc.sourceforge.net/nqc/
+#   - Not Quite C is a simple language with a C-like syntax that can be used to program Lego's RCX programmable brick (from the Mindstorms set).
+
+# OCaml (Objective Caml)
+#   - https://ocaml.org/
+#   - OCaml is a general purpose programming language with an emphasis on expressiveness and safety.
+
+# Trac
+#   - https://trac.edgewall.org/
+#   - Trac is an enhanced wiki and issue tracking system for software development projects.
+
+# Babel
+#   - http://babel.pocoo.org/
+#   - Babel includes a command-line interface for working with message catalogs, similar to the various GNU gettext tools commonly available on Linux/Unix systems. 
+
+# CLIPS (C Language Integrated Production System)
+#   - http://www.clipsrules.net/
+#   - the C Language Integrated Production System (CLIPS) is a rule-based programming language useful for creating expert systems and other programs where a heuristic solution is easier to implement and maintain than an algorithmic solution.
 
 # Group-Id: development
-RUN yum groups install -y "Development Tools" --setopt=group_package_types=mandatory,default,optional
-# # Mandatory Packages: ALL
-# RUN    yum install -y \
-#                       autoconf \
-#                       automake \
-#                       binutils \
-#                       bison \
-#                       flex \
-#                       gcc \
-#                       gcc-c++ \
-#                       gettext \
-#                       libtool \
-#                       make \
-#                       patch \
-#                       pkgconfig \
-#                       redhat-rpm-config \
-#                       rpm-build \
-#                       rpm-sign \
-# # Default Packages: ALL
-#      ; yum install -y \
-#                       byacc \
-#                       cscope \
-#                       ctags \
-#                       diffstat \
-#                       doxygen \
-#                       elfutils \
-#                       gcc-gfortran \
-#                       git \
-#                       indent \
-#                       intltool \
-#                       patchutils \
-#                       rcs \
-#                       subversion \
-#                       swig \
-#                       systemtap \
-# # Optional Packages: ALL
-#      ; yum install -y \
-#                       ElectricFence \
-#                       ant \
-#                       babel \
-#                       bzr \
-#                       ccache \
-#                       chrpath \
-#                       clips \
-#                       clips-devel \
-#                       clips-doc \
-#                       clips-emacs \
-#                       clips-xclips \
-#                       clipsmm-devel \
-#                       clipsmm-doc \
-#                       cmake \
-#                       cmucl \
-#                       colordiff \
-#                       compat-gcc-44 \
-#                       compat-gcc-44-c++ \
-#                       cvs \
-#                       cvsps \
-#                       darcs \
-#                       dejagnu \
-#                       email2trac \
-#                       expect \
-#                       ftnchek \
-#                       gcc-gnat \
-#                       gcc-objc \
-#                       gcc-objc++ \
-#                       ghc \
-#                       git \
-#                       haskell-platform \
-#                       imake \
-#                       javapackages-tools \
-#                       ksc \
-#                       lua \
-#                       mercurial \
-#                       mock \
-#                       mod_dav_svn \
-#                       nasm \
-#                       nqc \
-#                       nqc-doc \
-#                       ocaml \
-#                       perltidy \
-#                       qgit \
-#                       rpmdevtools \
-#                       rpmlint \
-#                       sbcl \
-#                       scorep \
-#                       systemtap-sdt-devel \
-#                       systemtap-server \
-#                       trac \
-#                       trac-git-plugin \
-#                       trac-mercurial-plugin \
-#                       trac-webadmin \
-#                       translate-toolkit \
-#                       ;
+# RUN yum groupinstall -y "Development Tools" --setopt=group_package_types=mandatory,default,optional
+# # Mandatory Packages:
+RUN yum install -y \
+                   autoconf \
+                   automake \
+                   binutils \
+                   bison \
+                   flex \
+                   gcc \
+                   gcc-c++ \
+                   gettext \
+                   libtool \
+                   make \
+                   patch \
+                   pkgconfig \
+                   redhat-rpm-config \
+                   rpm-build \
+                   rpm-sign \
+# Default Packages:
+                   byacc \
+                   cscope \
+                   ctags \
+                   diffstat \
+                   doxygen \
+                   elfutils \
+                   gcc-gfortran \
+                   git \
+                   indent \
+                   intltool \
+                   patchutils \
+                   rcs \
+                   # subversion \
+                   swig \
+                   systemtap \
+# Optional Packages:
+                   ElectricFence \
+                   ant \
+                   # babel \
+                   # bzr \
+                   ccache \
+                   chrpath \
+                   # clips \
+                   # clips-devel \
+                   # clips-doc \
+                   # clips-emacs \
+                   # clips-xclips \
+                   # clipsmm-devel \
+                   # clipsmm-doc \
+                   cmake \
+                   # cmucl \
+                   colordiff \
+                   compat-gcc-44 \
+                   compat-gcc-44-c++ \
+                   # cvs \
+                   # cvsps \
+                   # darcs \
+                   dejagnu \
+                   # email2trac \
+                   expect \
+                   ftnchek \
+                   gcc-gnat \
+                   gcc-objc \
+                   gcc-objc++ \
+                   # ghc \
+                   git \
+                   # haskell-platform \
+                   imake \
+                   javapackages-tools \
+                   # ksc \
+                   # lua \
+                   # mercurial \
+                   mock \
+                   # mod_dav_svn \
+                   nasm \
+                   # nqc \
+                   # nqc-doc \
+                   # ocaml \
+                   perltidy \
+                   qgit \
+                   rpmdevtools \
+                   rpmlint \
+                   # sbcl \
+                   # scorep \
+                   systemtap-sdt-devel \
+                   systemtap-server \
+                   # trac \
+                   # trac-git-plugin \
+                   # trac-mercurial-plugin \
+                   # trac-webadmin \
+                   # translate-toolkit \
+                   ;
 
 # Group-Id: base
-# RUN yum groups install -y "Base" --setopt=group_package_types=mandatory,default
-
+# RUN yum groupinstall -y "Base" --setopt=group_package_types=mandatory,default
 # Mandatory Packages:
-RUN    yum install -y \
-                      acl \
-                      at \
-                      attr \
-                      bc \
-                      bind-utils \
-                      # centos-indexhtml \
-                      cpio \
-                      # crda \
-                      crontabs \
-                      # cyrus-sasl-plain \
-                      dbus \
-                      ed \
-                      file \
-                      logrotate \
-                      lsof \
-                      man-db \
-                      net-tools \
-                      # ntsysv \
-                      pciutils \
-                      psacct \
-                      # quota \
-                      # setserial \
-                      traceroute \
-                      # usb_modeswitch \
-# Default Packages:
-     ; yum install -y \
-                      # abrt-addon-ccpp \
-                      # abrt-addon-python \
-                      # abrt-cli \
-                      # abrt-console-notification \
-                      bash-completion \
-                      blktrace \
-                      bpftool \
-                      bridge-utils \
-                      bzip2 \
-                      chrony \
-                      # cryptsetup \
-                      # dmraid \
-                      dosfstools \
-                      ethtool \
-                      # fprintd-pam \
-                      gnupg2 \
-                      hunspell \
-                      hunspell-en \
-                      # kmod-kvdo \
-                      # kpatch \
-                      # ledmon \
-                      libaio \
-                      # libreport-plugin-mailx \
-                      # libstoragemgmt \
-                      # lvm2 \
-                      man-pages \
-                      man-pages-overrides \
-                      # mdadm \
-                      mlocate \
-                      mtr \
-                      nano \
-                      # ntpdate \
-                      pinfo \
-                      # plymouth \
-                      # pm-utils \
-                      rdate \
-                      # rfkill \
-                      rng-tools \
-                      rsync \
-                      scl-utils \
-                      setuptool \
-                      # smartmontools \
-                      # sos \
-                      # sssd-client \
-                      strace \
-                      sysstat \
-                      systemtap-runtime \
-                      tcpdump \
-                      tcsh \
-                      # teamd \
-                      time \
-                      unzip \
-                      # usbutils \
-                      # vdo \
-                      vim-enhanced \
-                      virt-what \
-                      wget \
-                      which \
-                      words \
-                      # xfsdump \
-                      xz \
-                      yum-langpacks \
-                      yum-utils \
-                      zip \
+RUN yum install -y \
+                   acl \
+                   at \
+                   attr \
+                   bc \
+                   bind-utils \
+                   # centos-indexhtml \
+                   cpio \
+                   # crda \
+                   crontabs \
+                   # cyrus-sasl-plain \
+                   dbus \
+                   ed \
+                   file \
+                   logrotate \
+                   lsof \
+                   man-db \
+                   net-tools \
+                   # ntsysv \
+                   pciutils \
+                   psacct \
+                   # quota \
+                   # setserial \
+                   traceroute \
+                   # usb_modeswitch \
+# Deult Packages:
+                   # abrt-addon-ccpp \
+                   # abrt-addon-python \
+                   # abrt-cli \
+                   # abrt-console-notification \
+                   bash-completion \
+                   blktrace \
+                   bpftool \
+                   bridge-utils \
+                   bzip2 \
+                   chrony \
+                   # cryptsetup \
+                   # dmraid \
+                   dosfstools \
+                   ethtool \
+                   # fprintd-pam \
+                   gnupg2 \
+                   hunspell \
+                   hunspell-en \
+                   # kmod-kvdo \
+                   # kpatch \
+                   # ledmon \
+                   libaio \
+                   # libreport-plugin-mailx \
+                   # libstoragemgmt \
+                   # lvm2 \
+                   man-pages \
+                   man-pages-overrides \
+                   # mdadm \
+                   mlocate \
+                   mtr \
+                   nano \
+                   # ntpdate \
+                   pinfo \
+                   # plymouth \
+                   # pm-utils \
+                   rdate \
+                   # rfkill \
+                   rng-tools \
+                   rsync \
+                   scl-utils \
+                   setuptool \
+                   # smartmontools \
+                   # sos \
+                   # sssd-client \
+                   strace \
+                   sysstat \
+                   systemtap-runtime \
+                   tcpdump \
+                   tcsh \
+                   # teamd \
+                   time \
+                   unzip \
+                   # usbutils \
+                   # vdo \
+                   vim-enhanced \
+                   virt-what \
+                   wget \
+                   which \
+                   words \
+                   # xfsdump \
+                   xz \
+                   yum-langpacks \
+                   yum-utils \
+                   zip \
 # Optional Packages: NULL
 # Conditional Packages: NULL
-     ; yum install -y hunspell-ko
+                   hunspell-ko \
+                   ;
 
 # Group-Id: core
-# RUN yum groups install -y "Core" --setopt=group_package_types=mandatory
-
+# RUN yum groupinstall -y "Core" --setopt=group_package_types=mandatory
 # Mandatory Packages:
-RUN    yum install -y \
-                      # audit \
-                      basesystem \
-                      bash \
-                      # btrfs-progs \
-                      coreutils \
-                      cronie \
-                      curl \
-                      dhclient \
-                      # e2fsprogs \
-                      filesystem \
-                      firewalld \
-                      glibc \
-                      hostname \
-                      initscripts \
-                      iproute \
-                      # iprutils \
-                      iptables \
-                      iputils \
-                      irqbalance \
-                      # kbd \
-                      # kexec-tools \
-                      less \
-                      man-db \
-                      ncurses \
-                      openssh-clients \
-                      openssh-server \
-                      # parted \
-                      # passwd \
-                      # plymouth \
-                      # policycoreutils \
-                      procps-ng \
-                      rootfiles \
-                      rpm \
-                      rsyslog \
-                      # selinux-policy-targeted \
-                      setup \
-                      shadow-utils \
-                      sudo \
-                      systemd \
-                      tar \
-                      # tuned \
-                      util-linux \
-                      vim-minimal \
-                      xfsprogs \
-                      yum \
+RUN yum install -y \
+                   # audit \
+                   basesystem \
+                   bash \
+                   # btrfs-progs \
+                   coreutils \
+                   cronie \
+                   curl \
+                   dhclient \
+                   # e2fsprogs \
+                   filesystem \
+                   firewalld \
+                   glibc \
+                   hostname \
+                   initscripts \
+                   iproute \
+                   # iprutils \
+                   iptables \
+                   iputils \
+                   irqbalance \
+                   # kbd \
+                   # kexec-tools \
+                   less \
+                   man-db \
+                   ncurses \
+                   openssh-clients \
+                   openssh-server \
+                   # parted \
+                   passwd \
+                   # plymouth \
+                   # policycoreutils \
+                   procps-ng \
+                   rootfiles \
+                   rpm \
+                   rsyslog \
+                   # selinux-policy-targeted \
+                   setup \
+                   shadow-utils \
+                   sudo \
+                   systemd \
+                   tar \
+                   # tuned \
+                   util-linux \
+                   vim-minimal \
+                   xfsprogs \
+                   yum \
 # Default Packages: NULL
 # Optional Packages: NULL
-                      ;
+                   ;
 
 RUN    yum install -y centos-release-scl \
      ; yum install -y devtoolset-8-\* \
@@ -309,25 +362,32 @@ RUN    set -x \
     && yum install -y adoptopenjdk-8-hotspot \
                       adoptopenjdk-11-hotspot
 
-RUN    yum install -y python3 \
-                      python3-devel
+RUN yum install -y python3 \
+                   python3-devel
 
-RUN    rpm -e --nodeps git perl-Git \
-    && yum install -y git224 \
-    && yum install -y cmake3
+RUN yum install -y cgdb \
+                   cmake3 \
+                   glances \
+                   htop \
+                   maven \
+                   samba \
+                   telnet
 
-RUN    yum clean all \
-    && yum makecache
-
-RUN yum remove -y scorep-\*
+RUN yum install -y cockpit \
+                   cockpit-dashboard
 
 RUN    systemctl disable avahi-daemon.service \
                          kdump.service \
                          NetworkManager.service \
-                         network.service \
                          firewalld.service \
     && systemctl enable  cockpit.socket \
                          sshd.service
+
+# Git 2.32.0
+RUN    mkdir -p /usr/local/src/git-2.32.0 \
+    && curl -L https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.32.0.tar.xz -o /usr/local/src/git-2.32.0.tar.xz \
+    && tar -Jxvf /usr/local/src/git-2.32.0.tar.xz -C /usr/local/src/git-2.32.0 --strip-components=1 \
+    && cd /usr/local/src/git-2.32.0 && ./configure .&& make && make install
 
 # Artistic Style 3.1
 #   - make uninstall: `xargs rm < /usr/local/src/astyle_3.1_linux/install_manifest.txt`
@@ -339,10 +399,12 @@ RUN    mkdir -p /usr/local/src/astyle_3.1_linux \
 RUN    rm -rf /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
+RUN    sed -i "s/^#RemoveIPC=no/RemoveIPC=no/" /etc/systemd/logind.conf
+
 ###############################################################################################################################################################
 
 # Reference:
-# RFC3339
+# ISO 8601, RFC 3339
 #   - Command: $(date -u +'%Y-%m-%dT%H:%M:%SZ')
 ARG CREATED
 

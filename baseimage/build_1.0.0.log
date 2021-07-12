@@ -1,0 +1,77 @@
+Sending build context to Docker daemon  689.2kB
+[91m[WARNING]: Empty continuation line found in:
+    RUN    rm -f /var/lib/rpm/__*      ; rpm --rebuilddb -v -v      ; yum clean all      ; yum makecache RUN    yum install -y deltarpm                       yum-utils      ; yum update -y
+[WARNING]: Empty continuation lines will become errors in a future release.
+[0mStep 1/24 : FROM 192.168.2.253:5000/development/centos-systemd:7
+ ---> cfd3e8f1e0c4
+Step 2/24 : RUN    sed -i "s/^enabled=1/enabled=0/" /etc/yum/pluginconf.d/fastestmirror.conf      ; sed -i "s/^override_install_langs=en_US.utf8/# override_install_langs=en_US.utf8/" /etc/yum.conf      ; sed -i "s/^tsflags=nodocs/# tsflags=nodocs/" /etc/yum.conf
+ ---> Using cache
+ ---> 2b68c882e69d
+Step 3/24 : RUN    rm -f /var/lib/rpm/__*      ; rpm --rebuilddb -v -v      ; yum clean all      ; yum makecache RUN    yum install -y deltarpm                       yum-utils      ; yum update -y
+ ---> Using cache
+ ---> a722fef62691
+Step 4/24 : RUN    yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm                       https://rpms.remirepo.net/enterprise/remi-release-7.rpm                       https://repo.ius.io/ius-release-el7.rpm     && sed -i "s/^#\(baseurl.*\)/\1/" /etc/yum.repos.d/epel.repo     && sed -i "s/^\(metalink.*\)/# \1/" /etc/yum.repos.d/epel.repo
+ ---> Using cache
+ ---> 61153b571bbe
+Step 5/24 : RUN yum install -y man                    man-pages                    kernel-doc
+ ---> Using cache
+ ---> c9d1cd8d8d4f
+Step 6/24 : RUN yum install -y                    autoconf                    automake                    binutils                    bison                    flex                    gcc                    gcc-c++                    gettext                    libtool                    make                    patch                    pkgconfig                    redhat-rpm-config                    rpm-build                    rpm-sign                    byacc                    cscope                    ctags                    diffstat                    doxygen                    elfutils                    gcc-gfortran                    git                    indent                    intltool                    patchutils                    rcs                    swig                    systemtap                    ElectricFence                    ant                    ccache                    chrpath                    cmake                    colordiff                    compat-gcc-44                    compat-gcc-44-c++                    dejagnu                    expect                    ftnchek                    gcc-gnat                    gcc-objc                    gcc-objc++                    git                    imake                    javapackages-tools                    mock                    nasm                    perltidy                    qgit                    rpmdevtools                    rpmlint                    systemtap-sdt-devel                    systemtap-server                    ;
+ ---> Using cache
+ ---> 59f84ca340f0
+Step 7/24 : RUN yum install -y                    acl                    at                    attr                    bc                    bind-utils                    cpio                    crontabs                    dbus                    ed                    file                    logrotate                    lsof                    man-db                    net-tools                    pciutils                    psacct                    traceroute                    bash-completion                    blktrace                    bpftool                    bridge-utils                    bzip2                    chrony                    dosfstools                    ethtool                    gnupg2                    hunspell                    hunspell-en                    libaio                    man-pages                    man-pages-overrides                    mlocate                    mtr                    nano                    pinfo                    rdate                    rng-tools                    rsync                    scl-utils                    setuptool                    strace                    sysstat                    systemtap-runtime                    tcpdump                    tcsh                    time                    unzip                    vim-enhanced                    virt-what                    wget                    which                    words                    xz                    yum-langpacks                    yum-utils                    zip                    hunspell-ko                    ;
+ ---> Using cache
+ ---> 6effc7936e0d
+Step 8/24 : RUN yum install -y                    basesystem                    bash                    coreutils                    cronie                    curl                    dhclient                    filesystem                    firewalld                    glibc                    hostname                    initscripts                    iproute                    iptables                    iputils                    irqbalance                    less                    man-db                    ncurses                    openssh-clients                    openssh-server                    passwd                    procps-ng                    rootfiles                    rpm                    rsyslog                    setup                    shadow-utils                    sudo                    systemd                    tar                    util-linux                    vim-minimal                    xfsprogs                    yum                    ;
+ ---> Using cache
+ ---> 8d74772dc5db
+Step 9/24 : RUN    yum install -y centos-release-scl      ; yum install -y devtoolset-8-\*                       elfutils-libelf-devel                       ncurses-devel                       openssl                       openssl-devel
+ ---> Using cache
+ ---> cceea9db0d25
+Step 10/24 : RUN    yum install -y java-1.8.0-openjdk                       java-1.8.0-openjdk-devel                       java-11-openjdk                       java-11-openjdk-devel
+ ---> Using cache
+ ---> 96d858ca9d67
+Step 11/24 : RUN    set -x     && echo $'[AdoptOpenJDK] \nname=AdoptOpenJDK \nbaseurl=http://adoptopenjdk.jfrog.io/adoptopenjdk/rpm/centos/$releasever/$basearch \nenabled=1 \ngpgcheck=1 \ngpgkey=https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public' > /etc/yum.repos.d/adoptopenjdk.repo     && yum install -y adoptopenjdk-8-hotspot                       adoptopenjdk-11-hotspot
+ ---> Using cache
+ ---> 3d1d59e3c3e1
+Step 12/24 : RUN yum install -y python3                    python3-devel
+ ---> Using cache
+ ---> 00571ee09527
+Step 13/24 : RUN yum install -y cgdb                    cmake3                    glances                    htop                    maven                    samba                    telnet
+ ---> Using cache
+ ---> ca86ddb30553
+Step 14/24 : RUN yum install -y cockpit                    cockpit-dashboard
+ ---> Using cache
+ ---> 88446ef0ff9b
+Step 15/24 : RUN    systemctl disable avahi-daemon.service                          kdump.service                          NetworkManager.service                          firewalld.service     && systemctl enable  cockpit.socket                          sshd.service
+ ---> Using cache
+ ---> 44050c5618a0
+Step 16/24 : RUN    mkdir -p /usr/local/src/git-2.32.0     && curl -L https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.32.0.tar.xz -o /usr/local/src/git-2.32.0.tar.xz     && tar -Jxvf /usr/local/src/git-2.32.0.tar.xz -C /usr/local/src/git-2.32.0 --strip-components=1     && cd /usr/local/src/git-2.32.0 && ./configure .&& make && make install
+ ---> Using cache
+ ---> 4d607aff2cd4
+Step 17/24 : RUN    mkdir -p /usr/local/src/astyle_3.1_linux     && curl -L https://jaist.dl.sourceforge.net/project/astyle/astyle/astyle%203.1/astyle_3.1_linux.tar.gz -o /usr/local/src/astyle_3.1_linux.tar.gz     && tar -zxvf /usr/local/src/astyle_3.1_linux.tar.gz -C /usr/local/src/astyle_3.1_linux --strip-components=1     && cd /usr/local/src/astyle_3.1_linux && cmake3 .&& make && make install
+ ---> Using cache
+ ---> 7a53ac683253
+Step 18/24 : RUN    rm -rf /etc/localtime     && ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+ ---> Using cache
+ ---> 956e5cc4f365
+Step 19/24 : RUN    sed -i "s/^#RemoveIPC=no/RemoveIPC=no/" /etc/systemd/logind.conf
+ ---> Using cache
+ ---> fa61a620aa7b
+Step 20/24 : ARG CREATED
+ ---> Using cache
+ ---> 15b474e3b773
+Step 21/24 : ARG VERSION
+ ---> Using cache
+ ---> 534726ca1db1
+Step 22/24 : ARG REVISION
+ ---> Using cache
+ ---> 5c88e3bea118
+Step 23/24 : ARG REF_NAME
+ ---> Using cache
+ ---> a64e941a2cb6
+Step 24/24 : LABEL org.opencontainers.image.created=$CREATED       org.opencontainers.image.authors="youngjinj@cubrid.com"       org.opencontainers.image.url="hhttps://github.com/youngjinj/dev-server.git"       org.opencontainers.image.version=$VERSION       org.opencontainers.image.revision=$REVISION       org.opencontainers.image.vendor="CUBRID"       org.opencontainers.image.ref.name=$REF_NAME
+ ---> Using cache
+ ---> 4f12f07aa3aa
+Successfully built 4f12f07aa3aa
+Successfully tagged baseimage:1.0.0

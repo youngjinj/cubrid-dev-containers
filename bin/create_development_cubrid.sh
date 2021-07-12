@@ -9,8 +9,11 @@ fi
 CONTAINER_NAME=$1
 IP_D_CLASS=$2
 
+CANONICAL_PATH=`readlink -f $(dirname ${BASH_SOURCE})`
+VERSION=`cd ${CANONICAL_PATH} && cat version`
+
 DOCKER_HUB_PROJECT="192.168.2.253:5000/development"
-TAG_NAME="cubrid:latest"
+TAG_NAME="cubrid:${VERSION}"
 VOLUME_NAME="development-cubrid_${CONTAINER_NAME}_${IP_D_CLASS}_data"
 
 docker pull ${DOCKER_HUB_PROJECT}/${TAG_NAME}

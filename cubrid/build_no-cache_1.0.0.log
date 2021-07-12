@@ -1,0 +1,50 @@
+Sending build context to Docker daemon   16.9kB
+Step 1/14 : ARG VERSION_BASE
+Step 2/14 : FROM 192.168.2.253:5000/development/baseimage:$VERSION_BASE
+ ---> 4f12f07aa3aa
+Step 3/14 : ARG CREATED
+ ---> Running in cd59fd82b9ec
+Removing intermediate container cd59fd82b9ec
+ ---> 648b2d43e618
+Step 4/14 : ARG VERSION
+ ---> Running in cf55c5dcd37f
+Removing intermediate container cf55c5dcd37f
+ ---> 022b9904023f
+Step 5/14 : ARG REVISION
+ ---> Running in 979b428bf2df
+Removing intermediate container 979b428bf2df
+ ---> 17e82e8d1c33
+Step 6/14 : ARG REF_NAME
+ ---> Running in 20c78864e2cc
+Removing intermediate container 20c78864e2cc
+ ---> 491cf9233849
+Step 7/14 : LABEL org.opencontainers.image.created=$CREATED       org.opencontainers.image.authors="youngjinj@cubrid.com"       org.opencontainers.image.url="hhttps://github.com/youngjinj/dev-server.git"       org.opencontainers.image.version=$VERSION       org.opencontainers.image.revision=$REVISION       org.opencontainers.image.vendor="CUBRID"       org.opencontainers.image.ref.name=$REF_NAME       org.opencontainers.image.title="CUBRID Development Image"
+ ---> Running in 42b29432a60a
+Removing intermediate container 42b29432a60a
+ ---> 84809a34629e
+Step 8/14 : RUN echo $' \n# Minimize swap usage \n# \n#  - Default: vm.swappiness = 60 \nvm.swappiness = 1' >> /etc/sysctl.conf
+ ---> Running in 6f3f2bab8ed7
+Removing intermediate container 6f3f2bab8ed7
+ ---> 6a63552a3380
+Step 9/14 : RUN    sed "/# End of file/d" -i /etc/security/limits.conf     && echo $' \n*               soft    core            unlimited \n*               soft    nofile          32768 \n*               soft    nproc           16384 \n \n*               hard    core            unlimited \n*               hard    nofile          32768 \n*               hard    nproc           16384 \n \n# End of file' >> /etc/security/limits.conf     && sed -i "s/^\([*|root].*\)/# \1/" /etc/security/limits.d/20-nproc.conf
+ ---> Running in 64ba56aa24c2
+Removing intermediate container 64ba56aa24c2
+ ---> 2845f7b66daa
+Step 10/14 : RUN    sed -i "s/^\(%wheel[[:space:]]ALL=(ALL)[[:space:]]ALL\)/# \1/" /etc/sudoers     && sed -i "s/^# \(%wheel[[:space:]]ALL=(ALL)[[:space:]]NOPASSWD: ALL\)/\1/" /etc/sudoers
+ ---> Running in 69d09cb1cdc3
+Removing intermediate container 69d09cb1cdc3
+ ---> 10a4cc23a380
+Step 11/14 : COPY .custom_profile /root/.custom_profile
+ ---> ce7bb27e6bf3
+Step 12/14 : COPY .custom_profile /etc/skel/.custom_profile
+ ---> e4af1c6a557d
+Step 13/14 : RUN    echo $'\nsource ~/.custom_profile' >> /root/.bash_profile     && echo $'\nsource ~/.custom_profile' >> /root/.bashrc     && echo $'\nsource ~/.custom_profile' >> /etc/skel/.bash_profile     && echo $'\nsource ~/.custom_profile' >> /etc/skel/.bashrc
+ ---> Running in 1357901924ae
+Removing intermediate container 1357901924ae
+ ---> d8f08f99fdff
+Step 14/14 : ENTRYPOINT ["/usr/sbin/init"]
+ ---> Running in 37962987db2c
+Removing intermediate container 37962987db2c
+ ---> c444a5ae6dcf
+Successfully built c444a5ae6dcf
+Successfully tagged cubrid:1.0.0
