@@ -3,23 +3,25 @@
 # deprecated
 exit
 
-docker stop \
-	test192 test193 \
-	test194 test195 \
-	test196 test197 \
-	test198 test199 \
-	test200	test201
+CANONICAL_PATH=`readlink -f $(dirname ${BASH_SOURCE})`
 
-docker rm \
-	test192 test193 \
-	test194 test195 \
-	test196 test197 \
-	test198 test199 \
-	test200	test201
+${CANONICAL_PATH}/stop_rm_with_volume.sh bwkim192
+${CANONICAL_PATH}/stop_rm_with_volume.sh bwkim193
+${CANONICAL_PATH}/stop_rm_with_volume.sh bwkim194
 
-docker volume rm \
-	development-cubrid_test192_192_data development-cubrid_test193_193_data \
-	development-cubrid_test194_194_data development-cubrid_test195_195_data \
-	development-cubrid_test196_196_data development-cubrid_test197_197_data \
-	development-cubrid_test198_198_data development-cubrid_test199_199_data \
-	development-cubrid_test200_200_data development-cubrid_test201_201_data
+${CANONICAL_PATH}/stop_rm_with_volume.sh shpark195
+${CANONICAL_PATH}/stop_rm_with_volume.sh shpark196
+${CANONICAL_PATH}/stop_rm_with_volume.sh shpark197
+
+${CANONICAL_PATH}/stop_rm_with_volume.sh ctshim198
+${CANONICAL_PATH}/stop_rm_with_volume.sh ctshim199
+${CANONICAL_PATH}/stop_rm_with_volume.sh ctshim200
+
+${CANONICAL_PATH}/stop_rm_with_volume.sh hgryoo201
+${CANONICAL_PATH}/stop_rm_with_volume.sh hgryoo202
+${CANONICAL_PATH}/stop_rm_with_volume.sh hgryoo203
+
+${CANONICAL_PATH}/stop_rm_with_volume.sh youngjinj204
+${CANONICAL_PATH}/stop_rm_with_volume.sh youngjinj205
+${CANONICAL_PATH}/stop_rm_with_volume.sh youngjinj206
+

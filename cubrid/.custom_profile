@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export LANG=ko_KR.utf8
-export LANGUAGE ko_KR
-export LC_ALL=ko_KR.utf8
+export LANG="ko_KR.utf8"
+export LANGUAGE="ko_KR"
+export LC_ALL="ko_KR.utf8"
 
 source scl_source enable devtoolset-8
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # deprecated
-exit
+# exit
 
 if [ $# != 1 ]; then
 	echo "$# is Illegal number of parameters."

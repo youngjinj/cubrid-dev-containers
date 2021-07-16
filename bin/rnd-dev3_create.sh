@@ -5,17 +5,27 @@ exit
 
 CANONICAL_PATH=`readlink -f $(dirname ${BASH_SOURCE})`
 
-${CANONICAL_PATH}/create_development_cubrid.sh test192 192
-${CANONICAL_PATH}/create_development_cubrid.sh test193 193
+# bwkim
+${CANONICAL_PATH}/create_development_cubrid.sh bwkim192 192
+${CANONICAL_PATH}/create_development_cubrid.sh bwkim193 193
+${CANONICAL_PATH}/create_development_cubrid.sh bwkim194 194
 
-${CANONICAL_PATH}/create_development_cubrid.sh test194 194
-${CANONICAL_PATH}/create_development_cubrid.sh test195 195
+# shpark
+${CANONICAL_PATH}/create_development_cubrid.sh shpark195 195
+${CANONICAL_PATH}/create_development_cubrid.sh shpark196 196
+${CANONICAL_PATH}/create_development_cubrid.sh shpark197 197
 
-${CANONICAL_PATH}/create_development_cubrid.sh test196 196
-${CANONICAL_PATH}/create_development_cubrid.sh test197 197
+# ctshim
+${CANONICAL_PATH}/create_development_cubrid.sh ctshim198 198
+${CANONICAL_PATH}/create_development_cubrid.sh ctshim199 199
+${CANONICAL_PATH}/create_development_cubrid.sh ctshim200 200
 
-${CANONICAL_PATH}/create_development_cubrid.sh test198 198
-${CANONICAL_PATH}/create_development_cubrid.sh test199 199
+# hgryoo
+${CANONICAL_PATH}/create_development_cubrid.sh hgryoo201 201
+${CANONICAL_PATH}/create_development_cubrid.sh hgryoo202 202
+${CANONICAL_PATH}/create_development_cubrid.sh hgryoo203 203
 
-${CANONICAL_PATH}/create_development_cubrid.sh test200 200
-${CANONICAL_PATH}/create_development_cubrid.sh test201 201
+# youngjinj
+${CANONICAL_PATH}/create_development_cubrid.sh youngjinj204 204
+${CANONICAL_PATH}/create_development_cubrid.sh youngjinj205 205
+${CANONICAL_PATH}/create_development_cubrid.sh youngjinj206 206

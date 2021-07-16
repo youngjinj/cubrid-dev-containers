@@ -1,18 +1,18 @@
-192.168.2.192	test192 (rnd-dev3)
-192.168.2.193	test193 (rnd-dev3)
-192.168.2.194	test194 (rnd-dev3)
-192.168.2.195	test195 (rnd-dev3)
-192.168.2.196	test196 (rnd-dev3)
-192.168.2.197	test197 (rnd-dev3)
-192.168.2.198	test198 (rnd-dev3)
-192.168.2.199	test199 (rnd-dev3)
-192.168.2.200	test200 (rnd-dev3)
-192.168.2.201	test201 (rnd-dev3)
-192.168.2.202	test202 (rnd-dev3)
-192.168.2.203
-192.168.2.204
-192.168.2.205
-192.168.2.206
+192.168.2.192	bwkim192 (rnd-dev3)
+192.168.2.193	bwkim193 (rnd-dev3)
+192.168.2.194	bwkim194 (rnd-dev3)
+192.168.2.195	shpark195 (rnd-dev3)
+192.168.2.196	shpark196 (rnd-dev3)
+192.168.2.197	shpark197 (rnd-dev3)
+192.168.2.198	ctshim198 (rnd-dev3)
+192.168.2.199	ctshim199 (rnd-dev3)
+192.168.2.200	ctshim200 (rnd-dev3)
+192.168.2.201	hgryoo201 (rnd-dev3)
+192.168.2.202	hgryoo202 (rnd-dev3)
+192.168.2.203	hgryoo203 (rnd-dev3)
+192.168.2.204	youngjinj204 (rnd-dev3)
+192.168.2.205	youngjinj205 (rnd-dev3)
+192.168.2.206	youngjinj206 (rnd-dev3)
 192.168.2.207
 192.168.2.208
 192.168.2.209
