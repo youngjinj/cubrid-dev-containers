@@ -6,7 +6,7 @@ export LC_ALL="ko_KR.utf8"
 
 source scl_source enable devtoolset-8
 
-export MAKEFLAGS="-j 40"
+export MAKEFLAGS="-j $(nproc)"
 
 # java
 JDK_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.292.b10-1.el7_9.x86_64
