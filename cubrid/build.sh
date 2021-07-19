@@ -3,11 +3,11 @@
 CANONICAL_PATH=`readlink -f $(dirname ${BASH_SOURCE})`
 
 VERSION=`cd ${CANONICAL_PATH} && cat version`
-VERSION_BASE=`cd ${CANONICAL_PATH} && cat version_base`
+VERSION_BASE=`cd ${CANONICAL_PATH}/../baseimage && cat version`
 
-CREATED=`date -d @$(stat --printf='%Z' ${CANONICAL_PATH}/Dockerfile) -u +'%Y-%m-%dT%H:%M:%SZ'`
-REVISION=`cd ${CANONICAL_PATH} && git log -1 --format=%h`
-REF_NAME=`cd ${CANONICAL_PATH} && git symbolic-ref -q --short HEAD`
+CREATED=`cd ${CANONICAL_PATH} && cat build_arg | jq .CREATED | sed "s/\"//g"`
+REVISION=`cd ${CANONICAL_PATH} && cat build_arg | jq .REVISION | sed "s/\"//g"`
+REF_NAME=`cd ${CANONICAL_PATH} && cat build_arg | jq .REF_NAME | sed "s/\"//g"`
 
 IMAGE_NAME="cubrid"
 IMAGE_TAG=${VERSION}

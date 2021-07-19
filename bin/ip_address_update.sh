@@ -14,10 +14,10 @@ sed -i "s/^\(192\.168\.2\.254\).*/\1\tswitch/" ${CANONICAL_PATH}/../ip_address/*
 sed -i "s/^\(192\.168\.2\.255\).*/\1\tBroadcast Address/" ${CANONICAL_PATH}/../ip_address/*
 
 # hikwon
-sed -i "s/^\(192\.168\.2\.31\).*/\1\ttest31 (rnd-dev2)/" ${CANONICAL_PATH}/../ip_address/*
+sed -i "s/^\(192\.168\.2\.31\).*/\1\ttest31 (rnd-dev2) (hikwon)/" ${CANONICAL_PATH}/../ip_address/*
 
 # hiclass
-sed -i "s/^\(192\.168\.2\.30\).*/\1\ttech30 (rnd-dev3)/" ${CANONICAL_PATH}/../ip_address/*
+sed -i "s/^\(192\.168\.2\.30\).*/\1\ttech30 (rnd-dev3) (hiclass)/" ${CANONICAL_PATH}/../ip_address/*
 
 for CONTAINER_IP_NAME in ${CONTAINER_IP_NAME_LIST[@]}; do
 	CONTAINER_IP=`echo ${CONTAINER_IP_NAME} | cut -d "," -f 1`
