@@ -4,19 +4,25 @@ CANONICAL_PATH=`readlink -f $(dirname ${BASH_SOURCE})`
 
 VERSION=`cd ${CANONICAL_PATH} && cat version`
 
-CREATED=`cd ${CANONICAL_PATH} && cat build_arg | jq .CREATED | sed "s/\"//g"`
-REVISION=`cd ${CANONICAL_PATH} && cat build_arg | jq .REVISION | sed "s/\"//g"`
-REF_NAME=`cd ${CANONICAL_PATH} && cat build_arg | jq .REF_NAME | sed "s/\"//g"`
+# `date -d @$(stat --printf='%Z' ${CANONICAL_PATH}/Dockerfile) -u +'%Y-%m-%dT%H:%M:%SZ'`
+CREATED=`date -d @$(cd ${CANONICAL_PATH} && git show --format=%ct | head -1) -u +'%Y-%m-%dT%H:%M:%SZ'`
+REVISION=`cd ${CANONICAL_PATH} && git show --format=%h | head -1`
+
+git tag -f v${VERSION}
+
+# branch: `cd ${CANONICAL_PATH} && git symbolic-ref -q --short HEAD`
+# tag: `cd ${CANONICAL_PATH} && git describe --tags --exact-match`
+REF_NAME=`cd ${CANONICAL_PATH} && git describe --tags --exact-match`
 
 IMAGE_NAME="baseimage"
 IMAGE_TAG=${VERSION}
 
-# IS_NO_CACHE="Y"
-IS_NO_CACHE="N"
+IS_CACHE="Y"
+# IS_CACHE="N"
 
 docker pull 192.168.2.253:5000/development/centos-systemd:7
 
-if [ ${IS_NO_CACHE} != "Y" ]; then
+if [ ${IS_CACHE} == "Y" ]; then
         docker buildx build \
                 --build-arg CREATED=${CREATED} \
                 --build-arg VERSION=${VERSION} \
@@ -25,7 +31,7 @@ if [ ${IS_NO_CACHE} != "Y" ]; then
                 --rm \
                 --tag ${IMAGE_NAME}:${IMAGE_TAG} \
                 .
-elif [ ${IS_NO_CACHE} == "Y" ]; then
+elif [ ${IS_CACHE} == "N" ]; then
         docker build \
                 --build-arg CREATED=${CREATED} \
                 --build-arg VERSION=${VERSION} \
