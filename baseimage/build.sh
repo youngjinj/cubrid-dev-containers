@@ -20,7 +20,7 @@ IMAGE_TAG=${VERSION}
 IS_CACHE="Y"
 # IS_CACHE="N"
 
-docker pull 192.168.2.253:5000/development/centos-systemd:7
+docker pull 192.168.2.253:5000/development/centos-systemd:7.9.2009
 
 if [ ${IS_CACHE} == "Y" ]; then
         docker buildx build \

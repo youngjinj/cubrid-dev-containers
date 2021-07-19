@@ -1,4 +1,4 @@
-FROM 192.168.2.253:5000/development/centos-systemd:7
+FROM 192.168.2.253:5000/development/centos-systemd:7.9.2009
 
 RUN    sed -i "s/^enabled=1/enabled=0/" /etc/yum/pluginconf.d/fastestmirror.conf \
      ; sed -i "s/^override_install_langs=en_US.utf8/# override_install_langs=en_US.utf8/" /etc/yum.conf \

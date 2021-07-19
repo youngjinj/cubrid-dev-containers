@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IMAGE_NAME="centos-systemd"
-IMAGE_TAG="7"
+IMAGE_TAG="7.9.2009"
 
 docker build \
 	--rm \
