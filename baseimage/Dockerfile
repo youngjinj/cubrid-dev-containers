@@ -341,11 +341,26 @@ RUN yum install -y \
                    ;
 
 RUN    yum install -y centos-release-scl \
-     ; yum install -y devtoolset-8-\* \
+     ; yum install -y devtoolset-9-\* \
                       elfutils-libelf-devel \
                       ncurses-devel \
+     ; yum install -y ivy \
+                      expat \
+                      expat-devel \
+                      libedit \
+                      libedit-devel \
+                      jansson \
+                      jansson-devel \
+                      unixODBC \
+                      unixODBC-devel \
                       openssl \
-                      openssl-devel
+                      openssl-devel \
+                      lz4 \
+                      lz4-devel \
+                      rapidjson \
+                      rapidjson-devel \
+                      re2 \
+                      re2-devel
 
 RUN    yum install -y java-1.8.0-openjdk \
                       java-1.8.0-openjdk-devel \
