@@ -29,3 +29,13 @@ ${CANONICAL_PATH}/create_development_cubrid.sh hgryoo203 203
 ${CANONICAL_PATH}/create_development_cubrid.sh youngjinj204 204
 ${CANONICAL_PATH}/create_development_cubrid.sh youngjinj205 205
 ${CANONICAL_PATH}/create_development_cubrid.sh youngjinj206 206
+
+# hina
+${CANONICAL_PATH}/create_development_cubrid.sh hina207 207
+${CANONICAL_PATH}/create_development_cubrid.sh hina208 208
+${CANONICAL_PATH}/create_development_cubrid.sh hina209 209
+
+# ilhansong
+${CANONICAL_PATH}/create_development_cubrid.sh ilhansong210 210
+${CANONICAL_PATH}/create_development_cubrid.sh ilhansong211 211
+${CANONICAL_PATH}/create_development_cubrid.sh ilhansong212 212

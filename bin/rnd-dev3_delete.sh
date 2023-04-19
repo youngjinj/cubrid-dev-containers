@@ -25,3 +25,10 @@ ${CANONICAL_PATH}/stop_rm_with_volume.sh youngjinj204
 ${CANONICAL_PATH}/stop_rm_with_volume.sh youngjinj205
 ${CANONICAL_PATH}/stop_rm_with_volume.sh youngjinj206
 
+${CANONICAL_PATH}/stop_rm_with_volume.sh hina207
+${CANONICAL_PATH}/stop_rm_with_volume.sh hina208
+${CANONICAL_PATH}/stop_rm_with_volume.sh hina209
+
+${CANONICAL_PATH}/stop_rm_with_volume.sh ilhansong210
+${CANONICAL_PATH}/stop_rm_with_volume.sh ilhansong211
+${CANONICAL_PATH}/stop_rm_with_volume.sh ilhansong212
