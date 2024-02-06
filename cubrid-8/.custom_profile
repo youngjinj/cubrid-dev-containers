@@ -1,0 +1,92 @@
+#!/bin/bash
+
+# export LANG="ko_KR.utf8"
+# export LANGUAGE="ko_KR"
+# export LC_ALL="ko_KR.utf8"
+export LANG="en_US.utf8"
+export LANGUAGE="en_US"
+export LC_ALL="en_US.utf8"
+
+export MAKEFLAGS="-j $(nproc)"
+
+ulimit -Sc 0
+# ulimit -Sc unlimited
+
+# java
+JDK_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.362.b08-3.el8.x86_64
+
+# java-11
+# JDK_HOME=/usr/lib/jvm/java-11-openjdk-11.0.18.0.9-0.3.ea.el8.x86_64
+
+JAVA_HOME=${JDK_HOME}
+
+export JDK_HOME
+export JAVA_HOME
+
+# java
+TEMP_LD_LIBRARY_PATH=${JAVA_HOME}/jre/lib/amd64:${JAVA_HOME}/jre/lib/amd64/server
+
+# java-11
+# TEMP_LD_LIBRARY_PATH=${JAVA_HOME}/lib:${JAVA_HOME}/lib/server
+
+# Length of string is non-zero.
+if [ -n "${LD_LIBRARY_PATH}" ]; then
+        if [ `echo ${LD_LIBRARY_PATH} | grep ${TEMP_LD_LIBRARY_PATH} | wc -l` == 0 ]; then
+                LD_LIBRARY_PATH=${TEMP_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}
+        fi
+# Length of string is zero.
+else
+        LD_LIBRARY_PATH=${TEMP_LD_LIBRARY_PATH}
+fi
+
+TEMP_PATH=${JAVA_HOME}/bin
+
+# Length of string is non-zero.
+if [ -n "${PATH}" ]; then
+        if [ `echo ${PATH} | grep ${TEMP_PATH} | wc -l` == 0 ]; then
+                PATH=${TEMP_PATH}:${PATH}
+        fi
+# Length of string is zero.
+else
+        PATH=${TEMP_PATH}
+fi
+
+DEFAULT_CLASSPATH=".:tools.jar"
+
+# Length of string is non-zero.
+if [ -n "${CLASSPATH}" ]; then
+        if [ `echo ${CLASSPATH} | grep ${DEFAULT_CLASSPATH} | wc -l` == 0 ]; then
+                CLASSPATH=${DEFAULT_CLASSPATH}:${CLASSPATH}
+        fi
+# Length of string is zero.
+else
+        CLASSPATH=${DEFAULT_CLASSPATH}
+fi
+
+if [ -d "${CUBRID}/jdbc" ]; then
+        for CUBRID_JDBC_DRIVER in `ls ${CUBRID}/jdbc/*.jar`; do
+                if [ `echo ${CLASSPATH} | grep ${CUBRID_JDBC_DRIVER} | wc -l` == 0 ]; then
+                        CLASSPATH=${CLASSPATH}:${CUBRID_JDBC_DRIVER}
+                fi
+        done
+fi
+
+if [ -d "${CUBRID}/java" ]; then
+        for CUBRID_JDBC_DRIVER in `ls ${CUBRID}/java/*.jar`; do
+                if [ `echo ${CLASSPATH} | grep ${CUBRID_JDBC_DRIVER} | wc -l` == 0 ]; then
+                        CLASSPATH=${CLASSPATH}:${CUBRID_JDBC_DRIVER}
+                fi
+        done
+fi
+
+if [ -d "${CUBRID}/java/lib" ]; then
+        for CUBRID_JDBC_DRIVER in `ls ${CUBRID}/java/lib/*.jar`; do
+                if [ `echo ${CLASSPATH} | grep ${CUBRID_JDBC_DRIVER} | wc -l` == 0 ]; then
+                        CLASSPATH=${CLASSPATH}:${CUBRID_JDBC_DRIVER}
+                fi
+        done
+fi
+
+export PATH
+export LD_LIBRARY_PATH
+export CLASSPATH
